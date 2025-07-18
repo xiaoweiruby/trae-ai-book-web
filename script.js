@@ -234,8 +234,8 @@ function createChapterCard(chapter, index) {
         </div>
     `;
     
-    // 添加点击事件进入阅读界面
-    card.addEventListener('click', () => openReadingMode(chapter));
+    // 添加点击事件跳转到新的阅读页面
+    card.addEventListener('click', () => openReadingPage(chapter, index));
     
     return card;
 }
@@ -353,7 +353,17 @@ function formatMarkdownContentFallback(markdown) {
 }
 
 /**
- * 打开阅读模式
+ * 跳转到新的阅读页面
+ * @param {Object} chapter - 章节数据
+ * @param {number} index - 章节索引
+ */
+function openReadingPage(chapter, index) {
+    // 跳转到新的阅读页面，传递章节索引作为参数
+    window.location.href = `reading.html?chapter=${index}`;
+}
+
+/**
+ * 打开阅读模式（保留原有功能用于兼容）
  * @param {Object} chapter - 章节数据
  */
 function openReadingMode(chapter) {

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>章节阅读 - Trae AI 从小白到大神的学习之路 📚</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Markdown解析和代码高亮支持 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        /* 阅读页面专用样式 */
+        .reading-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 0;
+        }
+        
+        .reading-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .reading-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .reading-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0;
+            line-height: 1.3;
+        }
+        
+        .reading-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .video-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .video-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .video-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+        }
+        
+        .video-header i {
+            font-size: 1.5rem;
+            color: #00a1d6;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 宽高比 */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .content-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f8f9fa;
+        }
+        
+        .content-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+        }
+        
+        .content-header i {
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+        
+        .content-area {
+            line-height: 1.8;
+            color: #34495e;
+        }
+        
+        .content-area h1,
+        .content-area h2,
+        .content-area h3,
+        .content-area h4,
+        .content-area h5,
+        .content-area h6 {
+            color: #2c3e50;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .content-area h1 {
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .content-area h2 {
+            font-size: 1.6rem;
+            color: #667eea;
+        }
+        
+        .content-area h3 {
+            font-size: 1.3rem;
+        }
+        
+        .content-area p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .content-area code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+        
+        .content-area pre {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .content-area pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        
+        .content-area blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 1.5rem 0;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .content-area ul,
+        .content-area ol {
+            padding-left: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .content-area li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 40px;
+            color: #e74c3c;
+        }
+        
+        .error-message i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .error-message h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .error-details {
+            font-size: 0.9rem;
+            color: #95a5a6;
+            margin-top: 15px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .reading-container {
+                padding: 0 15px;
+            }
+            
+            .reading-header {
+                padding: 15px 20px;
+                margin-bottom: 20px;
+            }
+            
+            .reading-title {
+                font-size: 1.6rem;
+            }
+            
+            .video-section,
+            .content-section {
+                padding: 20px;
+            }
+            
+            .reading-content {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .reading-title {
+                font-size: 1.4rem;
+            }
+            
+            .video-section,
+            .content-section {
+                padding: 15px;
+            }
+            
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-page">
+        <div class="reading-container">
+            <!-- 页面头部 -->
+            <div class="reading-header">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                    返回首页
+                </button>
+                <h1 id="readingTitle" class="reading-title">章节标题</h1>
+            </div>
+            
+            <!-- 阅读内容 -->
+            <div class="reading-content">
+                <!-- 视频区域 -->
+                <div class="video-section">
+                    <div class="video-header">
+                        <i class="fab fa-bilibili"></i>
+                        <h3>配套视频讲解</h3>
+                    </div>
+                    <div class="video-container">
+                        <iframe id="videoFrame" 
+                                src="" 
+                                frameborder="0" 
+                                allowfullscreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+                        </iframe>
+                    </div>
+                </div>
+                
+                <!-- 文档内容区域 -->
+                <div class="content-section">
+                    <div class="content-header">
+                        <i class="fas fa-book-open"></i>
+                        <h3>章节内容</h3>
+                    </div>
+                    <div id="contentArea" class="content-area">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            正在加载章节内容...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="reading.js"></script>
+</body>
+</html>
