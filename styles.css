@@ -235,6 +235,28 @@ body {
     transform: translateY(-2px);
 }
 
+.btn-training {
+    background: linear-gradient(45deg, #f59e0b, #d97706);
+    color: white;
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+}
+
+.btn-training:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
+}
+
+.btn-community {
+    background: linear-gradient(45deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+}
+
+.btn-community:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+}
+
 /* 3D书籍效果 */
 .hero-image {
     display: flex;
@@ -319,6 +341,7 @@ body {
 
 .video-description-wrapper {
     margin-top: 20px;
+    text-align: center;
 }
 
 .video-description {
@@ -327,6 +350,7 @@ body {
     margin: 0;
     font-weight: 400;
     line-height: 1.6;
+    text-align: center;
 }
 
 .video-container-featured {
@@ -743,6 +767,13 @@ body {
     .hero-buttons {
         justify-content: center;
         flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .btn {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+        min-width: 140px;
     }
     
     .book-cover {
@@ -795,6 +826,16 @@ body {
 @media (max-width: 480px) {
     .hero-title {
         font-size: 2rem;
+    }
+    
+    .hero-buttons {
+        gap: 12px;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+        min-width: 120px;
     }
     
     .section-title {
