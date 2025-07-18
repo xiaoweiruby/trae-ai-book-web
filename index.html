@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trae AI 从小白到大神的学习之路 📚</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-book-open"></i>
+                <span>Trae AI 学习之路</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">首页</a>
+                <a href="#chapters" class="nav-link">章节</a>
+                <a href="#about" class="nav-link">关于</a>
+                <a href="#contact" class="nav-link">联系</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主页部分 -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i>
+                    <span>围巾哥萧尘 著</span>
+                </div>
+                <h1 class="hero-title">
+                    Trae AI 从小白到大神的学习之路
+                    <span class="emoji">🧣</span>
+                </h1>
+                <p class="hero-description">
+                    一本全面的 Trae AI 学习指南，带你从零基础到精通 AI 编程，
+                    解锁无限创意可能！无论你是编程新手还是资深开发者，
+                    这本书都将成为你的最佳伙伴。
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">10</span>
+                        <span class="stat-label">章节</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">25</span>
+                        <span class="stat-label">小节</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">7.3万</span>
+                        <span class="stat-label">字数</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToChapters()">
+                        <i class="fas fa-play"></i>
+                        开始阅读
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-download"></i>
+                        下载电子书
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="book-cover">
+                    <img src="images/book-cover.svg" alt="Trae AI 从小白到大神的学习之路" class="book-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 章节列表 -->
+    <section id="chapters" class="chapters">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">📖 章节目录</h2>
+                <p class="section-description">系统化的学习路径，从基础到进阶，助你成为 Trae AI 专家</p>
+            </div>
+            <div class="chapters-grid" id="chaptersGrid">
+                <!-- 章节将通过 JavaScript 动态加载 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于作者 -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="about-title">关于作者 👨‍💻</h2>
+                    <h3 class="author-name">围巾哥萧尘</h3>
+                    <p class="author-description">
+                        Rails 全栈工程师，Trae AI 超级体验官。在2025年的 AI FOR CODE 比赛中获得优秀奖，
+                        稀土掘金工具类优质作者评选榜首，获得 Trae 技术先锋奖、使用成就奖等多个奖项。
+                    </p>
+                    <div class="achievements">
+                        <div class="achievement">
+                            <i class="fas fa-trophy"></i>
+                            <span>Trae 技术先锋奖</span>
+                        </div>
+                        <div class="achievement">
+                            <i class="fas fa-medal"></i>
+                            <span>AI FOR CODE 优秀奖</span>
+                        </div>
+                        <div class="achievement">
+                            <i class="fas fa-star"></i>
+                            <span>掘金优质作者</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="author-avatar">
+                    <img src="images/author-avatar.svg" alt="围巾哥萧尘" class="avatar-image">
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系部分 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="contact-title">📞 联系我们</h2>
+                <p class="contact-description">有问题或建议？欢迎与我们交流！</p>
+                <div class="contact-links">
+                    <a href="#" class="contact-link">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="#" class="contact-link">
+                        <i class="fas fa-envelope"></i>
+                        <span>邮箱</span>
+                    </a>
+                    <a href="#" class="contact-link">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2025 围巾哥萧尘. 保留所有权利.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">隐私政策</a>
+                    <a href="#">使用条款</a>
+                    <a href="#">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 章节阅读模态框 -->
+    <div id="chapterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">章节标题</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent">章节内容将在这里显示...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
