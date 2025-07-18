@@ -12,7 +12,8 @@ const chaptersData = [
         readTime: "8分钟",
         status: "已完成",
         fileName: "前言 Trae AI 从小白到大神的学习之路.md",
-        color: "#e74c3c"
+        color: "#e74c3c",
+        bilibiliUrl: "https://www.bilibili.com/video/BV1Wp3tzhEfM"
     },
     {
         number: "第一章",
@@ -21,7 +22,8 @@ const chaptersData = [
         readTime: "15分钟",
         status: "已完成",
         fileName: "第一章 Trae AI 软件介绍.md",
-        color: "#3498db"
+        color: "#3498db",
+        bilibiliUrl: "https://www.bilibili.com/video/BV1FyGJzMEC9"
     },
     {
         number: "第二章",
@@ -30,7 +32,8 @@ const chaptersData = [
         readTime: "20分钟",
         status: "已完成",
         fileName: "第二章：代码仓库管理.md",
-        color: "#2ecc71"
+        color: "#2ecc71",
+        bilibiliUrl: "https://www.bilibili.com/video/BV1FoGxzWEE5"
     },
     {
         number: "第三章",
@@ -39,7 +42,8 @@ const chaptersData = [
         readTime: "25分钟",
         status: "已完成",
         fileName: "第三章：项目部署基础.MD",
-        color: "#f39c12"
+        color: "#f39c12",
+        bilibiliUrl: "https://www.bilibili.com/video/BV1unMozyE7M"
     },
     {
         number: "第四章",
@@ -48,7 +52,8 @@ const chaptersData = [
         readTime: "30分钟",
         status: "已完成",
         fileName: "第四章：MCP 环境搭建.md",
-        color: "#9b59b6"
+        color: "#9b59b6",
+        bilibiliUrl: "https://www.bilibili.com/video/BV1gE3CzJEGa"
     },
     {
         number: "第五章",
@@ -57,7 +62,8 @@ const chaptersData = [
         readTime: "35分钟",
         status: "已完成",
         fileName: "第五章：构建你的智能体.md",
-        color: "#1abc9c"
+        color: "#1abc9c",
+        bilibiliUrl: "https://www.bilibili.com/video/BV1b6gwzFEe9"
     },
     {
         number: "第六章",
@@ -66,7 +72,8 @@ const chaptersData = [
         readTime: "40分钟",
         status: "已完成",
         fileName: "第六章 网页的开发.md",
-        color: "#e67e22"
+        color: "#e67e22",
+        bilibiliUrl: "https://www.bilibili.com/video/BV17ugTzdENF"
     },
     {
         number: "第七章",
@@ -75,7 +82,8 @@ const chaptersData = [
         readTime: "45分钟",
         status: "已完成",
         fileName: "第七章：谷歌插件开发与发布.md",
-        color: "#34495e"
+        color: "#34495e",
+        bilibiliUrl: "https://www.bilibili.com/video/BV1NAM9z8EY6"
     },
     {
         number: "第八章",
@@ -84,7 +92,8 @@ const chaptersData = [
         readTime: "50分钟",
         status: "已完成",
         fileName: "第八章：微信小程序的开发与发布.md",
-        color: "#16a085"
+        color: "#16a085",
+        bilibiliUrl: "https://www.bilibili.com/video/BV1AMQhY8EDx"
     },
     {
         number: "第九章",
@@ -93,7 +102,8 @@ const chaptersData = [
         readTime: "55分钟",
         status: "已完成",
         fileName: "第九章：桌面软件的打造.md",
-        color: "#8e44ad"
+        color: "#8e44ad",
+        bilibiliUrl: "https://www.bilibili.com/video/BV12yGqzcEAv"
     }
 ];
 
@@ -216,10 +226,16 @@ function createChapterCard(chapter, index) {
                 <span>${chapter.readTime}</span>
             </div>
         </div>
+        <div class="chapter-actions">
+            <div class="action-hint">
+                <i class="fas fa-mouse-pointer"></i>
+                <span>点击进入阅读模式</span>
+            </div>
+        </div>
     `;
     
-    // 添加点击事件
-    card.addEventListener('click', () => openChapterModal(chapter));
+    // 添加点击事件进入阅读界面
+    card.addEventListener('click', () => openReadingMode(chapter));
     
     return card;
 }
@@ -337,13 +353,101 @@ function formatMarkdownContentFallback(markdown) {
 }
 
 /**
+ * 打开阅读模式
+ * @param {Object} chapter - 章节数据
+ */
+function openReadingMode(chapter) {
+    const chaptersSection = document.getElementById('chapters');
+    const readingSection = document.getElementById('reading');
+    const readingTitle = document.getElementById('readingTitle');
+    const contentArea = document.getElementById('contentArea');
+    const videoFrame = document.getElementById('readingVideoFrame');
+    
+    if (chaptersSection && readingSection && readingTitle && contentArea && videoFrame) {
+        // 隐藏章节列表，显示阅读界面
+        chaptersSection.style.display = 'none';
+        readingSection.style.display = 'block';
+        
+        // 设置标题
+        readingTitle.textContent = `${chapter.number} - ${chapter.title}`;
+        
+        // 加载章节内容
+        loadChapterContent(chapter.file, contentArea);
+        
+        // 设置视频
+        const bvMatch = chapter.bilibiliUrl.match(/BV[a-zA-Z0-9]+/);
+        if (bvMatch) {
+            const bvid = bvMatch[0];
+            videoFrame.src = `https://player.bilibili.com/player.html?bvid=${bvid}&page=1&high_quality=1&danmaku=0`;
+        } else {
+            videoFrame.src = chapter.bilibiliUrl;
+        }
+        
+        // 滚动到顶部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+/**
+ * 返回章节目录
+ */
+function backToChapters() {
+    const chaptersSection = document.getElementById('chapters');
+    const readingSection = document.getElementById('reading');
+    const videoFrame = document.getElementById('readingVideoFrame');
+    
+    if (chaptersSection && readingSection) {
+        // 显示章节列表，隐藏阅读界面
+        chaptersSection.style.display = 'block';
+        readingSection.style.display = 'none';
+        
+        // 停止视频播放
+        if (videoFrame) {
+            videoFrame.src = '';
+        }
+        
+        // 滚动到章节部分
+        scrollToChapters();
+    }
+}
+
+/**
  * 关闭模态框
  */
 function closeModal() {
-    const modal = document.getElementById('chapterModal');
+    const chapterModal = document.getElementById('chapterModal');
+    const videoModal = document.getElementById('videoModal');
+    
+    if (chapterModal) {
+        chapterModal.style.display = 'none';
+    }
+    
+    if (videoModal) {
+        videoModal.style.display = 'none';
+        // 停止视频播放
+        const videoFrame = document.getElementById('videoFrame');
+        if (videoFrame) {
+            videoFrame.src = '';
+        }
+    }
+    
+    document.body.style.overflow = 'auto';
+}
+
+/**
+ * 关闭视频模态框
+ */
+function closeVideoModal() {
+    const modal = document.getElementById('videoModal');
     if (modal) {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
+        
+        // 停止视频播放
+        const videoFrame = document.getElementById('videoFrame');
+        if (videoFrame) {
+            videoFrame.src = '';
+        }
     }
 }
 
@@ -469,6 +573,9 @@ window.addEventListener('keydown', (e) => {
 // 导出函数供HTML调用
 window.scrollToChapters = scrollToChapters;
 window.closeModal = closeModal;
+window.closeVideoModal = closeVideoModal;
+window.openReadingMode = openReadingMode;
+window.backToChapters = backToChapters;
 window.toggleMobileMenu = toggleMobileMenu;
 
 // 页面性能优化
