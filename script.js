@@ -286,7 +286,44 @@ async function loadChapterContent(fileName) {
  * @returns {string} 格式化后的HTML
  */
 function formatMarkdownContent(markdown) {
-    // 简单的Markdown到HTML转换
+    // 配置marked.js选项
+    marked.setOptions({
+        highlight: function(code, lang) {
+            // 使用highlight.js进行代码高亮
+            if (lang && hljs.getLanguage(lang)) {
+                try {
+                    return hljs.highlight(code, { language: lang }).value;
+                } catch (err) {
+                    console.warn('代码高亮失败:', err);
+                }
+            }
+            return hljs.highlightAuto(code).value;
+        },
+        breaks: true,        // 支持换行
+        gfm: true,          // 支持GitHub风格的Markdown
+        tables: true,       // 支持表格
+        sanitize: false,    // 允许HTML标签
+        smartLists: true,   // 智能列表
+        smartypants: true   // 智能标点符号
+    });
+    
+    try {
+        // 使用marked.js解析Markdown
+        const html = marked.parse(markdown);
+        return `<div class="chapter-content">${html}</div>`;
+    } catch (error) {
+        console.error('Markdown解析失败:', error);
+        // 降级到简单解析
+        return formatMarkdownContentFallback(markdown);
+    }
+}
+
+/**
+ * 降级的Markdown解析函数
+ * @param {string} markdown - Markdown文本
+ * @returns {string} 格式化后的HTML
+ */
+function formatMarkdownContentFallback(markdown) {
     let html = markdown
         .replace(/^# (.*$)/gim, '<h1>$1</h1>')
         .replace(/^## (.*$)/gim, '<h2>$1</h2>')
