@@ -864,7 +864,20 @@ body {
     line-height: 1.6;
 }
 
-/* 阅读界面样式 */
+/* 章节视图和阅读视图样式 */
+.chapters-view {
+    width: 100%;
+}
+
+.reading-view {
+    width: 100%;
+    min-height: 80vh;
+    padding: 2rem 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    margin-top: 2rem;
+}
+
 .reading-section {
     min-height: 100vh;
     background: #f8fafc;

@@ -357,28 +357,43 @@ function formatMarkdownContentFallback(markdown) {
  * @param {Object} chapter - 章节数据
  */
 function openReadingMode(chapter) {
-    const chaptersSection = document.getElementById('chapters');
-    const readingSection = document.getElementById('reading');
+    const chaptersView = document.getElementById('chaptersView');
+    const readingView = document.getElementById('readingView');
     const readingTitle = document.getElementById('readingTitle');
     const contentArea = document.getElementById('contentArea');
     const videoFrame = document.getElementById('readingVideoFrame');
     
-    if (chaptersSection && readingSection && readingTitle && contentArea && videoFrame) {
-        // 隐藏章节列表，显示阅读界面
-        chaptersSection.style.display = 'none';
-        readingSection.style.display = 'block';
+    if (chaptersView && readingView && readingTitle && contentArea && videoFrame) {
+        // 隐藏章节目录视图，显示阅读视图
+        chaptersView.style.display = 'none';
+        readingView.style.display = 'block';
         
         // 设置标题
         readingTitle.textContent = `${chapter.number} - ${chapter.title}`;
         
         // 加载章节内容
-        loadChapterContent(chapter.file, contentArea);
+        contentArea.innerHTML = '<div class="loading">正在加载章节内容...</div>';
+        
+        loadChapterContent(chapter.fileName)
+            .then(content => {
+                contentArea.innerHTML = content;
+            })
+            .catch(error => {
+                contentArea.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>内容加载失败</h3>
+                        <p>抱歉，无法加载章节内容。请稍后重试。</p>
+                        <p class="error-details">错误信息: ${error.message}</p>
+                    </div>
+                `;
+            });
         
         // 设置视频
         const bvMatch = chapter.bilibiliUrl.match(/BV[a-zA-Z0-9]+/);
         if (bvMatch) {
             const bvid = bvMatch[0];
-            videoFrame.src = `https://player.bilibili.com/player.html?bvid=${bvid}&page=1&high_quality=1&danmaku=0`;
+            videoFrame.src = `https://player.bilibili.com/player.html?bvid=${bvid}&page=1&autoplay=0&high_quality=1&danmaku=0`;
         } else {
             videoFrame.src = chapter.bilibiliUrl;
         }
@@ -392,14 +407,14 @@ function openReadingMode(chapter) {
  * 返回章节目录
  */
 function backToChapters() {
-    const chaptersSection = document.getElementById('chapters');
-    const readingSection = document.getElementById('reading');
+    const chaptersView = document.getElementById('chaptersView');
+    const readingView = document.getElementById('readingView');
     const videoFrame = document.getElementById('readingVideoFrame');
     
-    if (chaptersSection && readingSection) {
-        // 显示章节列表，隐藏阅读界面
-        chaptersSection.style.display = 'block';
-        readingSection.style.display = 'none';
+    if (chaptersView && readingView) {
+        // 显示章节目录视图，隐藏阅读视图
+        chaptersView.style.display = 'block';
+        readingView.style.display = 'none';
         
         // 停止视频播放
         if (videoFrame) {
