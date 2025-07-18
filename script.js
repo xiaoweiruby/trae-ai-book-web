@@ -477,6 +477,52 @@ function closeVideoModal() {
 }
 
 /**
+ * 打开二维码模态框
+ * @param {string} type - 按钮类型（编程培训或付费社群）
+ */
+function openQRCodeModal(type) {
+    const modal = document.getElementById('qrCodeModal');
+    const title = document.getElementById('qrModalTitle');
+    const subtitle = document.getElementById('qrModalSubtitle');
+    
+    if (modal && title && subtitle) {
+        // 根据类型设置不同的标题
+        if (type === '编程培训') {
+            title.textContent = '加入编程培训';
+            subtitle.textContent = '扫码了解详细课程信息';
+        } else if (type === '付费社群') {
+            title.textContent = '加入付费社群';
+            subtitle.textContent = '扫码加入专属学习社群';
+        }
+        
+        modal.style.display = 'block';
+        
+        // 添加淡入动画
+        setTimeout(() => {
+            modal.querySelector('.qr-modal-content').style.transform = 'scale(1)';
+            modal.querySelector('.qr-modal-content').style.opacity = '1';
+        }, 10);
+    }
+}
+
+/**
+ * 关闭二维码模态框
+ */
+function closeQRCodeModal() {
+    const modal = document.getElementById('qrCodeModal');
+    
+    if (modal) {
+        // 添加淡出动画
+        modal.querySelector('.qr-modal-content').style.transform = 'scale(0.8)';
+        modal.querySelector('.qr-modal-content').style.opacity = '0';
+        
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+}
+
+/**
  * 滚动到章节部分
  */
 function scrollToChapters() {
@@ -582,9 +628,20 @@ function toggleMobileMenu() {
 
 // 点击模态框外部关闭模态框
 window.addEventListener('click', (e) => {
-    const modal = document.getElementById('chapterModal');
-    if (e.target === modal) {
+    const chapterModal = document.getElementById('chapterModal');
+    const videoModal = document.getElementById('videoModal');
+    const qrCodeModal = document.getElementById('qrCodeModal');
+    
+    if (e.target === chapterModal) {
         closeModal();
+    }
+    
+    if (e.target === videoModal) {
+        closeVideoModal();
+    }
+    
+    if (e.target === qrCodeModal) {
+        closeQRCodeModal();
     }
 });
 

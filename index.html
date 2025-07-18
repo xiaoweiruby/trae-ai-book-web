@@ -74,11 +74,11 @@
                         <i class="fas fa-download"></i>
                         下载电子书
                     </button>
-                    <button class="btn btn-training">
+                    <button class="btn btn-training" onclick="openQRCodeModal('编程培训')">
                         <i class="fas fa-graduation-cap"></i>
                         编程培训
                     </button>
-                    <button class="btn btn-community">
+                    <button class="btn btn-community" onclick="openQRCodeModal('付费社群')">
                         <i class="fas fa-users"></i>
                         付费社群
                     </button>
@@ -269,6 +269,23 @@
                             sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
                     </iframe>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 二维码模态框 -->
+    <div id="qrCodeModal" class="modal">
+        <div class="modal-content qr-modal-content">
+            <span class="close" onclick="closeQRCodeModal()">&times;</span>
+            <div class="qr-modal-header">
+                <h2 id="qrModalTitle">扫码加入</h2>
+                <p id="qrModalSubtitle">使用微信扫描下方二维码</p>
+            </div>
+            <div class="qr-code-container">
+                <img src="images/二维码.jpg" alt="二维码" class="qr-code-image">
+            </div>
+            <div class="qr-modal-footer">
+                <p class="qr-tips">扫码后请备注来源：Trae AI 电子书</p>
             </div>
         </div>
     </div>
